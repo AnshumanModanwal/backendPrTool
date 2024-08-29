@@ -25,7 +25,10 @@ app.use(
 );
 
 // Ensure CORS pre-flight requests are handled properly
-app.options("*", cors());
+// Ensure OPTIONS requests return a 200 status for all routes
+app.options('*', (req, res) => {
+  res.sendStatus(200);
+});
 
 // Google AI API setup
 const MODEL_NAME = "models/text-bison-001";
