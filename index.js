@@ -32,20 +32,20 @@ app.use(
 // cors
 app.options("*", cors()); // Enable CORS pre-flight for all routes
 
-// // Custom CORS middleware
-// const allowCrossDomain = (req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "https://www.bizzowl.com");
-//   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-//   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-//   if (req.method === 'OPTIONS') {
-//      // Preflight request. Reply successfully:
-//      return res.status(200).end();
-//   }
-//   next();
-//  };
+// Custom CORS middleware
+const allowCrossDomain = (req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://www.bizzowl.com");
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  if (req.method === 'OPTIONS') {
+     // Preflight request. Reply successfully:
+     return res.status(200).end();
+  }
+  next();
+ };
  
- // Use the custom CORS middleware
-//  app.use(allowCrossDomain);
+//  Use the custom CORS middleware
+ app.use(allowCrossDomain);
 
 const MODEL_NAME = "models/text-bison-001";
 const API_KEY = process.env.GOOGLE_API_KEY;
