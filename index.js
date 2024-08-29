@@ -22,7 +22,7 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
   optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
 }));
-
+app.options('/Orders', cors()); // Handle preflight
 // Google AI API setup
 const MODEL_NAME = "models/text-bison-001";
 const API_KEY = process.env.GOOGLE_API_KEY;
