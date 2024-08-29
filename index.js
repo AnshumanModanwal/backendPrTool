@@ -16,12 +16,12 @@ const port = process.env.PORT || 5000;
 app.use(bodyParser.json());
 
 // Configure CORS
-app.use(
-	cors({
-		origin: "*",
-		credentials: true,
-	})
-);
+app.use(cors({
+  origin: 'https://www.bizzowl.com', // Allow requests from this domain
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allowed HTTP methods
+  allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
+  optionsSuccessStatus: 200, // For legacy browsers
+}));
 
 // Handle preflight requests for all routes
 app.options('*', cors()); 
@@ -56,8 +56,8 @@ app.post("/prGenerator", async (req, res) => {
 // Razorpay Orders endpoint
 app.post("/Orders", async (req, res) => {
   const razorpay = new Razorpay({
-    key_id: process.env.RAZORPAY_KEY_ID,
-    key_secret: process.env.RAZORPAY_KEY_SECRET,
+    key_id: process.env.RZR_KEY,
+    key_secret: process.env.KEY_SECRET,
   });
   
   const { amount, currency } = req.body;
