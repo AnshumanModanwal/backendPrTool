@@ -14,32 +14,18 @@ const port = process.env.PORT || 5000;
 
 // Middleware for parsing JSON bodies
 app.use(bodyParser.json());
+// Use the cors package to handle CORS
 app.use(
   cors({
-    origin: "*", // Adjust this to your needs, '*' allows all origins
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Specify the methods you want to allow
-    allowedHeaders: ["Content-Type", "Authorization"], // Specify the headers you want to allow
-    optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
+    origin: "http://localhost:3000", // Allow requests from this origin
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Specify allowed methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
+    optionsSuccessStatus: 200, // Set success status for preflight OPTIONS requests
   })
 );
 
-// cors
-app.options("*", cors()); // Enable CORS pre-flight for all routes
-
-// Custom CORS middleware
-const allowCrossDomain = (req, res, next) => {
-  res.header("Access-Control-Allow-Origin",  "http://localhost:3000");
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  if (req.method === 'OPTIONS') {
-     // Preflight request. Reply successfully:
-     return res.status(200).end();
-  }
-  next();
- };
- 
- // Use the custom CORS middleware
- app.use(allowCrossDomain);
+// Ensure CORS pre-flight requests are handled properly
+app.options("*", cors());
 
 // Google AI API setup
 const MODEL_NAME = "models/text-bison-001";
