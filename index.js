@@ -41,8 +41,33 @@ const client = new TextServiceClient({
 // Endpoint to generate business names based on user input
 app.post("/prGenerator", async (req, res) => {
   try {
-    const { input } = req.body;
-    const prompt = `Generate a unique Press release with proper format on the topic ${input}`;
+    console.log("Received body:", req.body);
+    const { prType,details,tone,companyName,companyDesc, adQuotes} = req.body;
+   
+
+const prompt = `
+Act as a seasoned Public Relations professional with 25 years of experience in the Indian market. The objective is to help me write a press release with a human-like touch that passes AI detection tests. 
+
+The reason we are writing this press release is ${prType}. 
+
+Here is an overview of details I have got to manage, rest you need to manage this professionally: ${details}. 
+
+This is the ${tone} tone you need to use throughout this press release. 
+
+The company for which we are writing this press release is ${companyName}. 
+
+Here is a brief description of the company, including the value proposition and key details: ${companyDesc}. 
+
+Here is what the C-level executive of that company has to say: ${adQuotes}. 
+
+The output requirement is as follows:
+- Word Count: Between 500-1000 words.
+- Writing Style: Ensure the press release reads naturally, follows professional press release standards, and feels human-written.
+
+Now generate a professional press release based on the provided details and ensure it meets the specified requirements, including tone and word count.
+`;
+
+
 
     const response = await client.generateText({
       model: MODEL_NAME,
